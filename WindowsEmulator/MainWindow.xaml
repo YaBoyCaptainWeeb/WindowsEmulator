@@ -9,8 +9,8 @@
         WindowStartupLocation="CenterScreen" WindowState="Maximized"
         ResizeMode="NoResize" WindowStyle="None" >
     <Window.Resources>
-        <ImageBrush x:Key="BackGround" ImageSource="Assets/Background.jpg"/>
-        <ImageBrush x:Key="Logo" ImageSource="Assets/OSLogo.png"/>
+        <ImageBrush x:Key="LogoEnter" ImageSource="Assets/OSLogoEnter.png"/>
+        <ImageBrush x:Key="LogoExit" ImageSource="Assets/OSLogoExit.png"/>
         <Style x:Key="FocusVisual">
             <Setter Property="Control.Template">
                 <Setter.Value>
@@ -49,12 +49,12 @@
                                 <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
                             </Trigger>
                             <Trigger Property="IsMouseOver" Value="true">
-                                <Setter Property="Background" TargetName="border" Value="{StaticResource Logo}"/>
-                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Logo}"/>
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource LogoEnter}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource LogoEnter}"/>
                             </Trigger>
                             <Trigger Property="IsPressed" Value="true">
-                                <Setter Property="Background" TargetName="border" Value="{StaticResource Logo}"/>
-                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Logo}"/>
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource LogoEnter}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource LogoEnter}"/>
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="false">
                                 <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background}"/>
@@ -66,10 +66,63 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <ImageBrush x:Key="LogoEnter1" ImageSource="Assets/OSLogoEnter.png"/>
+        <Style x:Key="FocusVisual1">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle Margin="2" StrokeDashArray="1 2" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" SnapsToDevicePixels="true" StrokeThickness="1"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <SolidColorBrush x:Key="Button.Static.Background1" Color="#FFDDDDDD"/>
+        <SolidColorBrush x:Key="Button.Static.Border1" Color="#FF707070"/>
+        <SolidColorBrush x:Key="Button.Disabled.Background1" Color="#FFF4F4F4"/>
+        <SolidColorBrush x:Key="Button.Disabled.Border1" Color="#FFADB2B5"/>
+        <SolidColorBrush x:Key="Button.Disabled.Foreground1" Color="#FF838383"/>
+        <Style x:Key="ExitBtn" TargetType="{x:Type Button}">
+            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual1}"/>
+            <Setter Property="Background" Value="{StaticResource Button.Static.Background1}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border1}"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true">
+                            <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsDefaulted" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource LogoExit}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource LogoExit}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource LogoExit}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource LogoExit}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background1}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border1}"/>
+                                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground1}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+       
         
     </Window.Resources>
     <Window.Background>
-        <ImageBrush ImageSource="Assets/Background.jpg"/>
+        <ImageBrush ImageSource="Assets/Background1.jpg"/>
     </Window.Background>
     <StackPanel VerticalAlignment="Center" >
         <StackPanel Width="300">
@@ -84,16 +137,24 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Row="0" Grid.Column="0" Text="Имя пользователя:" Foreground="White" FontWeight="DemiBold" FontSize="16" HorizontalAlignment="Center"/>
-                <TextBox Grid.Row="0" Grid.Column="1" x:Name="User_Login" Height="20" BorderThickness="2" Background="Transparent"/>
+                <TextBox Grid.Row="0" Grid.Column="1" x:Name="User_Login" Foreground="White" Height="20" BorderThickness="2" Background="Transparent"/>
                 <TextBlock Grid.Row="1" Grid.Column="0" Text="Пароль:" Foreground="White" FontWeight="DemiBold"  FontSize="16" HorizontalAlignment="Center"/>
-                <TextBox Grid.Row="1" Grid.Column="1" x:Name="User_PassWord" Height="20" BorderThickness="2" Background="Transparent"/>
+                <TextBox Grid.Row="1" Grid.Column="1" x:Name="User_PassWord" Foreground="White" Height="20" BorderThickness="2" Background="Transparent"/>
             </Grid>
         </StackPanel>
-
-        <Button Style="{DynamicResource LogoBtn}" ToolTip="Завершить работу" Click="TurnOff" BorderBrush="Transparent" Background="Transparent" Width="40" Height="40" VerticalAlignment="Bottom" Margin="0 5 0 0">
-            <Image Source="/OSLogo.png"/>
+        <Grid HorizontalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="60"/>
+            </Grid.ColumnDefinitions>
+        <Button Grid.Column="0" Style="{DynamicResource LogoBtn}" ToolTip="Войти" Click="TurnOff" BorderBrush="Transparent" Background="Transparent" Width="60" Height="60" VerticalAlignment="Bottom" Margin="0 5 0 0">
+            <Image Source="Assets/OSLogoEnter.png"/>
         </Button>
-        
+        <Button Grid.Column="1" Style="{DynamicResource ExitBtn}" ToolTip="Завершить работу" Click="TurnOff" BorderBrush="Transparent" Background="Transparent" Width="60" Height="60" VerticalAlignment="Bottom" Margin="0 5 0 0">
+            <Image Source="Assets/OSLogoExit.png"/>
+        </Button>
+        </Grid>
+
         <StackPanel.Background>
             <SolidColorBrush Color="#FF432A2A" Opacity="0.6" />
         </StackPanel.Background>

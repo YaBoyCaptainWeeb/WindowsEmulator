@@ -95,14 +95,16 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\OSLogo.png" />
-    <Resource Include="OSLogo.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Background.jpg" />
+    <Resource Include="Assets\OSLogoEnter.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="UserList.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Background1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\OSLogoExit.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
