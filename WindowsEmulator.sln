@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32825.248
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsEmulator", "WindowsEmulator\WindowsEmulator.csproj", "{9214C893-F4C0-45BE-B3B3-330F3F1FE46E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9214C893-F4C0-45BE-B3B3-330F3F1FE46E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9214C893-F4C0-45BE-B3B3-330F3F1FE46E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9214C893-F4C0-45BE-B3B3-330F3F1FE46E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9214C893-F4C0-45BE-B3B3-330F3F1FE46E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {01C5A424-9D2F-419E-8544-BA23E44084A6}
+	EndGlobalSection
+EndGlobal
