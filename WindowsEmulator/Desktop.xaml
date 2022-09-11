@@ -10,8 +10,16 @@
     <Window.Background>
         <ImageBrush ImageSource="Assets/Desktop.jpg"/>
     </Window.Background>
-    <StackPanel VerticalAlignment="Bottom">
-        <Grid Height="40" Background="#0a0c1a">
+    <DockPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        <Canvas VerticalAlignment="Stretch" HorizontalAlignment="Stretch" DockPanel.Dock="Top">
+            <StackPanel Background="Transparent" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <Button Background="Transparent" BorderBrush="Transparent" Click="OpenJournal" Width="80" Height="80">
+                    <Image Source="Assets/Journal.png"/>
+                </Button>
+                <TextBlock Text="Журнал безопасности" FontSize="12" Foreground="White" TextWrapping="Wrap" Width="55" Margin="0 0 0 0" FontStretch="Medium"/>
+            </StackPanel>
+        </Canvas>
+        <Grid Height="40" Background="#0a0c1a" DockPanel.Dock="Bottom" VerticalAlignment="Bottom">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="40"/>
                 <ColumnDefinition Width="40"/>
@@ -29,5 +37,5 @@
             </Button>
             <TextBlock Grid.Column="3" x:Name="CurrentUserTitle" Foreground="White" FontSize="18"/>
         </Grid>
-    </StackPanel>
+    </DockPanel>
 </Window>

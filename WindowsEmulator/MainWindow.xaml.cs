@@ -91,7 +91,7 @@ namespace WindowsEmulator
                         // MessageBox.Show("Вы успешно вошли как: " + Users[i]._username); // Отладка, потом удалить
                         File.AppendAllText(@"Journal.txt", _date.ToString(@"g") + " Вход в систему: " + Users[i]._username + "\n");
                         // User CurrentUser = Users[i];
-                        new Desktop(Users[i]).Show();
+                        new Desktop(Users[i], Users).Show();
                         this.Close();
                         return;
                     } else

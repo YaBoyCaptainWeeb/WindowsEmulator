@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,13 +21,19 @@ namespace WindowsEmulator
     public partial class Desktop : Window
     {
         User _currentUser;
-        public Desktop(User CurrentUser)
+        ObservableCollection<User> _users;
+        public Desktop(User CurrentUser, ObservableCollection<User> users)
         {
             InitializeComponent();
             _currentUser = CurrentUser;
+            _users = users;
             CurrentUserTitle.Text = "Пользователь: " + _currentUser._username;
         }
 
+        private void OpenJournal(object sender, RoutedEventArgs e)
+        {
+
+        }
         private void ChangeUser(object sender, RoutedEventArgs e)
         {
             new MainWindow().Show();

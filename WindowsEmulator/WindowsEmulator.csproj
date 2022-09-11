@@ -59,8 +59,15 @@
     <Compile Include="Desktop.xaml.cs">
       <DependentUpon>Desktop.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Journal.xaml.cs">
+      <DependentUpon>Journal.xaml</DependentUpon>
+    </Compile>
     <Compile Include="User.cs" />
     <Page Include="Desktop.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Journal.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -130,6 +137,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Shutdown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Journal.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
