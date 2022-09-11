@@ -1,0 +1,33 @@
+﻿<Window x:Class="WindowsEmulator.Desktop"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WindowsEmulator"
+        mc:Ignorable="d"
+        Title="Desktop" Height="450" Width="800"
+        WindowState="Maximized" ResizeMode="NoResize" WindowStyle="None">
+    <Window.Background>
+        <ImageBrush ImageSource="Assets/Desktop.jpg"/>
+    </Window.Background>
+    <StackPanel VerticalAlignment="Bottom">
+        <Grid Height="40" Background="#0a0c1a">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="40"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" ToolTip="Завершить работу" Click="ShutDown" Background="Transparent" BorderBrush="Transparent" >
+                <Image Source="Assets/Shutdown.png"/>
+            </Button>
+            <Button Grid.Column="1" ToolTip="Сменить пользователя" Click="ChangeUser" Background="Transparent" BorderBrush="Transparent" >
+                <Image Source="Assets/ChangeUser.png"/>
+            </Button>
+            <Button Grid.Column="2" ToolTip="Панель администратора" Background="Transparent" BorderBrush="Transparent" >
+                <Image Source="Assets/AdminPanel.png"/>
+            </Button>
+            <TextBlock Grid.Column="3" x:Name="CurrentUserTitle" Foreground="White" FontSize="18"/>
+        </Grid>
+    </StackPanel>
+</Window>

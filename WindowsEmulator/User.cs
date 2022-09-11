@@ -11,13 +11,21 @@ namespace WindowsEmulator
     {
         public string _username;
         public string _password;
-        public string _access;
+        public bool _OpenFolders;
+        public bool _OpenPersonalFolder;
+        public bool _Journal;
+        public bool _Settings;
+        public bool _AccountsAdministrating;
 
-        public User(string username, string password, string access)
+        public User(string username, string password, bool OpenFolders, bool OpenPersonalFolder, bool Journal, bool Settings, bool AccountsAdminitrating)
         {
             this._username = username;
             this._password = password;
-            this._access = access;
+            this._OpenFolders = OpenFolders;
+            this._OpenPersonalFolder = OpenPersonalFolder;
+            this._Journal = Journal;
+            this._Settings = Settings;
+            this._AccountsAdministrating = AccountsAdminitrating;
         }
     } 
 }

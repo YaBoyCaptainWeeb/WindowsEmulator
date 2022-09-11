@@ -56,7 +56,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Desktop.xaml.cs">
+      <DependentUpon>Desktop.xaml</DependentUpon>
+    </Compile>
     <Compile Include="User.cs" />
+    <Page Include="Desktop.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -107,6 +114,22 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\OSLogoExit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Journal.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Desktop.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Start.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\AdminPanel.png" />
+    <Resource Include="Assets\ChangeUser.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Shutdown.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
