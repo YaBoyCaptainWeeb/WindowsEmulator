@@ -11,13 +11,7 @@
         <ImageBrush ImageSource="Assets/Desktop.jpg"/>
     </Window.Background>
     <DockPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-        <Canvas VerticalAlignment="Stretch" HorizontalAlignment="Stretch" DockPanel.Dock="Top">
-            <StackPanel Background="Transparent" HorizontalAlignment="Left" VerticalAlignment="Top">
-                <Button Background="Transparent" BorderBrush="Transparent" Click="OpenJournal" Width="80" Height="80">
-                    <Image Source="Assets/Journal.png"/>
-                </Button>
-                <TextBlock Text="Журнал безопасности" FontSize="12" Foreground="White" TextWrapping="Wrap" Width="55" Margin="0 0 0 0" FontStretch="Medium"/>
-            </StackPanel>
+        <Canvas AllowDrop="True" Drop="FolderArea_Drop" Opacity="0.5" Background="Black" x:Name="FolderArea" MinWidth="800" MinHeight="940" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DockPanel.Dock="Top">
         </Canvas>
         <Grid Height="40" Background="#0a0c1a" DockPanel.Dock="Bottom" VerticalAlignment="Bottom">
             <Grid.ColumnDefinitions>

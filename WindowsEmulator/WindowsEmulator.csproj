@@ -59,11 +59,18 @@
     <Compile Include="Desktop.xaml.cs">
       <DependentUpon>Desktop.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DisplayTile.xaml.cs">
+      <DependentUpon>DisplayTile.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Journal.xaml.cs">
       <DependentUpon>Journal.xaml</DependentUpon>
     </Compile>
     <Compile Include="User.cs" />
     <Page Include="Desktop.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DisplayTile.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -140,6 +147,15 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Journal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\JournalIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="JournalIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="CurrentUser.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

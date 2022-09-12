@@ -26,7 +26,6 @@ namespace WindowsEmulator
     /// </summary>
     public partial class MainWindow : Window
     {
-        DateTime _date = DateTime.Now;
         string[] UserList;
         string[] UserData = new string[7];
         ObservableCollection<User> Users;
@@ -39,7 +38,7 @@ namespace WindowsEmulator
             try
             {
                 UserList = File.ReadAllLines(@"UserList.txt");
-                File.AppendAllText(@"Journal.txt",_date.ToString(@"g") + " Выполнен запуск системы" + "\n");
+                File.AppendAllText(@"Journal.txt",DateTime.Now.ToString(@"g") + " Выполнен запуск системы" + "\n");
             }
             catch (Exception)
             {
@@ -61,9 +60,6 @@ namespace WindowsEmulator
                         Convert.ToBoolean(UserData[4]), Convert.ToBoolean(UserData[5]), 
                         Convert.ToBoolean(UserData[6]))); // Создание объектов класса User на основе записей в списке
                 }
-                /* MessageBox.Show(Users[1]._username + Users[1]._password + Convert.ToString(Users[1]._OpenFolders) +
-                    Convert.ToString(Users[1]._OpenPersonalFolder) + Convert.ToString(Users[1]._Journal) +
-                    Convert.ToString(Users[1]._Settings) + Convert.ToString(Users[1]._AccountsAdministrating)); */
                 List<string> UserNames = new List<string>();
                 foreach(User user in Users)
                 {
@@ -81,22 +77,23 @@ namespace WindowsEmulator
         private void LogIn(object sender, RoutedEventArgs e) // Авторизация
         {
             int i = 0;
-            //MessageBox.Show(Convert.ToString(Users.Count));
             while (i != Users.Count)
             {
                 if (Convert.ToString(UsersList.SelectedItem) == Users[i]._username)
                 {
                     if (Convert.ToString(User_PassWord.Password) == Users[i]._password)
                     {
-                        // MessageBox.Show("Вы успешно вошли как: " + Users[i]._username); // Отладка, потом удалить
-                        File.AppendAllText(@"Journal.txt", _date.ToString(@"g") + " Вход в систему: " + Users[i]._username + "\n");
-                        // User CurrentUser = Users[i];
+                        File.AppendAllText(@"Journal.txt", DateTime.Now.ToString(@"g") + " Вход в систему: " + Users[i]._username + "\n");
+                        File.WriteAllText(@"CurrentUser.txt", Users[i]._username + " " + Users[i]._password + " "
+                            + Users[i]._OpenFolders + " " + Users[i]._OpenPersonalFolder + " "
+                            + Users[i]._Journal + " " + Users[i]._Settings + " "
+                            + Users[i]._AccountsAdministrating);
                         new Desktop(Users[i], Users).Show();
                         this.Close();
                         return;
                     } else
                     {
-                        File.AppendAllText(@"Journal.txt",_date.ToString(@"g") + " Неудачная попытка входа: " + Users[i]._username + "\n");
+                        File.AppendAllText(@"Journal.txt",DateTime.Now.ToString(@"g") + " Неудачная попытка входа: " + Users[i]._username + "\n");
                         MessageBox.Show("Введен неверный логин или пароль.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
                         return;
                     }
@@ -109,7 +106,7 @@ namespace WindowsEmulator
 
         private void TurnOff(object sender, RoutedEventArgs e)
         {
-            File.AppendAllText(@"Journal.txt",_date.ToString(@"g") + " Завершение работы системы" + "\n");
+            File.AppendAllText(@"Journal.txt",DateTime.Now.ToString(@"g") + " Завершение работы системы" + "\n");
             Application.Current.Shutdown();
         }
     }

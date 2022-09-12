@@ -7,15 +7,18 @@ using System.Windows;
 
 namespace WindowsEmulator
 {
+
     public class User
     {
-        public string _username;
-        public string _password;
-        public bool _OpenFolders;
-        public bool _OpenPersonalFolder;
-        public bool _Journal;
-        public bool _Settings;
-        public bool _AccountsAdministrating;
+        public string _username { get; set; }
+        public string _password { get; set; }
+        public bool _OpenFolders { get; set; }
+        public bool _OpenPersonalFolder { get; set; }
+        public bool _Journal { get; set; }
+        public bool _Settings { get; set; }
+        public bool _AccountsAdministrating { get; set; }
+
+
 
         public User(string username, string password, bool OpenFolders, bool OpenPersonalFolder, bool Journal, bool Settings, bool AccountsAdminitrating)
         {
@@ -26,6 +29,10 @@ namespace WindowsEmulator
             this._Journal = Journal;
             this._Settings = Settings;
             this._AccountsAdministrating = AccountsAdminitrating;
+        }
+        public User()
+        {
+            
         }
     } 
 }

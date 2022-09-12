@@ -5,15 +5,30 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WindowsEmulator"
         mc:Ignorable="d"
-        Title="Журнал безопасности" Height="300" Width="500"  
-        WindowStartupLocation="CenterScreen">
+        Title="Журнал безопасности" Height="400" Width="600"  
+        WindowStartupLocation="CenterScreen" Icon="/JournalIcon.ico">
     <Grid>
-        <ListView>
+        <ListView x:Name="JournalList" Margin="0 30 0 0">
             <ListView.View>
                 <GridView>
-                    
+                    <GridView.Columns>
+                        <GridViewColumn Header="Дата" DisplayMemberBinding="{Binding Date}"/>
+                        <GridViewColumn Header="Время" DisplayMemberBinding="{Binding Time}"/>
+                        <GridViewColumn Header="Действие" DisplayMemberBinding="{Binding Action}"/>
+                        <GridViewColumn Header="Пользователь" DisplayMemberBinding="{Binding User}"/>
+                    </GridView.Columns>
                 </GridView>
             </ListView.View>
+            <ListView.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.HeaderTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding Name}" Background="#d0ebff" Foreground="#1971c2" BorderBrush="#1971c2" BorderThickness="1"/>
+                        </DataTemplate>
+                    </GroupStyle.HeaderTemplate>
+                </GroupStyle>
+            </ListView.GroupStyle>
         </ListView>
+        <ComboBox x:Name="GroupBy" SelectedIndex="0" SelectionChanged="GroupByUser_SelectionChanged" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5 5 0 0" Width="150"/>
     </Grid>
 </Window>
