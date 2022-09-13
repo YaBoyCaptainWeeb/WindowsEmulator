@@ -157,5 +157,11 @@
   <ItemGroup>
     <Resource Include="CurrentUser.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Folder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Folders.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -5,11 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WindowsEmulator"
              mc:Ignorable="d" 
-             d:DesignHeight="65" d:DesignWidth="50" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" Loaded="UserControl_Loaded">
+             d:DesignHeight="60" d:DesignWidth="45" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" Loaded="UserControl_Loaded">
     <Grid>
-        <Button Background="Transparent" x:Name="btn"  Height="50" Width="50" VerticalAlignment="Top" BorderThickness="0">
-            <Image Source="{Binding Image}"/>
-        </Button>
+        <Image Source="{Binding Image}" Width="50" Height="65"/>
         <TextBlock Text="{Binding Text}"  Margin="0 0 0 -15" VerticalAlignment="Bottom" Foreground="White" FontSize="11" TextAlignment="Center" TextWrapping="Wrap"/>
     </Grid>
 </UserControl>

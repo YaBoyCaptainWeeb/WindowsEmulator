@@ -45,7 +45,6 @@ namespace WindowsEmulator
                 data.Add(match.Value);
             }
             user._Journal = Convert.ToBoolean(data[5]);
-            MessageBox.Show(data[5]);
             DataContext = this;
         }
         
@@ -57,23 +56,11 @@ namespace WindowsEmulator
                 DragDrop.DoDragDrop(this, this, DragDropEffects.Move);
             }
         }
-        private void OpenJournal(object sender, RoutedEventArgs e)
-        {
-            if (user._Journal == true) // Проверка на наличие доступа у пользователя, должно быть true
-            {
-                var task = new Journal();
-                task.Show();
-            }
-            else
-            {
-                MessageBox.Show("У вас нет доступа к журналу.", "Ошибка", MessageBoxButton.OK);
-            }
-        }
-
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            btn.Click += new RoutedEventHandler(OpenJournal);
+            // btn.Click += new RoutedEventHandler(OpenJournal);
         }
+
     }
 }

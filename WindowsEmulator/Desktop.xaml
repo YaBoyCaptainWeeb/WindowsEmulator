@@ -11,7 +11,7 @@
         <ImageBrush ImageSource="Assets/Desktop.jpg"/>
     </Window.Background>
     <DockPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-        <Canvas AllowDrop="True" Drop="FolderArea_Drop" Opacity="0.5" Background="Black" x:Name="FolderArea" MinWidth="800" MinHeight="940" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DockPanel.Dock="Top">
+        <Canvas AllowDrop="True" Drop="FolderArea_Drop" DragOver="FolderArea_DragOver" Opacity="0.4" Background="Black" x:Name="FolderArea" MinWidth="800" MinHeight="940" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DockPanel.Dock="Top">
         </Canvas>
         <Grid Height="40" Background="#0a0c1a" DockPanel.Dock="Bottom" VerticalAlignment="Bottom">
             <Grid.ColumnDefinitions>
@@ -30,6 +30,7 @@
                 <Image Source="Assets/AdminPanel.png"/>
             </Button>
             <TextBlock Grid.Column="3" x:Name="CurrentUserTitle" Foreground="White" FontSize="18"/>
+            <TextBlock Grid.Column="3" Foreground="White" TextAlignment="Center" x:Name="SysTime" FontSize="14" HorizontalAlignment="Right" VerticalAlignment="Center"/>
         </Grid>
     </DockPanel>
 </Window>
