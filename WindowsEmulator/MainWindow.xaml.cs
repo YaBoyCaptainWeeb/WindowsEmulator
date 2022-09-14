@@ -27,7 +27,7 @@ namespace WindowsEmulator
     public partial class MainWindow : Window
     {
         string[] UserList;
-        string[] UserData = new string[7];
+        string[] UserData = new string[6];
         ObservableCollection<User> Users;
         Regex rgx = new Regex(@"\b\S+\b");
         
@@ -57,8 +57,7 @@ namespace WindowsEmulator
                     }
                     Users.Add(new User(UserData[0], UserData[1], 
                         Convert.ToBoolean(UserData[2]), Convert.ToBoolean(UserData[3]), 
-                        Convert.ToBoolean(UserData[4]), Convert.ToBoolean(UserData[5]), 
-                        Convert.ToBoolean(UserData[6]))); // Создание объектов класса User на основе записей в списке
+                        Convert.ToBoolean(UserData[4]), Convert.ToBoolean(UserData[5]))); // Создание объектов класса User на основе записей в списке
                 }
                 List<string> UserNames = new List<string>();
                 foreach(User user in Users)
@@ -86,8 +85,7 @@ namespace WindowsEmulator
                         File.AppendAllText(@"Journal.txt", DateTime.Now.ToString(@"g") + " Вход в систему: " + Users[i]._username + "\n");
                         File.WriteAllText(@"CurrentUser.txt", Users[i]._username + " " + Users[i]._password + " "
                             + Users[i]._OpenFolders + " " + Users[i]._OpenPersonalFolder + " "
-                            + Users[i]._Journal + " " + Users[i]._Settings + " "
-                            + Users[i]._AccountsAdministrating);
+                            + Users[i]._Journal + " " + Users[i]._AccountsAdministrating);
                         new Desktop(Users[i], Users).Show();
                         this.Close();
                         return;

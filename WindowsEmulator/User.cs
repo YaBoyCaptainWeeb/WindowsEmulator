@@ -15,19 +15,17 @@ namespace WindowsEmulator
         public bool _OpenFolders { get; set; }
         public bool _OpenPersonalFolder { get; set; }
         public bool _Journal { get; set; }
-        public bool _Settings { get; set; }
         public bool _AccountsAdministrating { get; set; }
 
 
 
-        public User(string username, string password, bool OpenFolders, bool OpenPersonalFolder, bool Journal, bool Settings, bool AccountsAdminitrating)
+        public User(string username, string password, bool OpenFolders, bool OpenPersonalFolder, bool Journal, bool AccountsAdminitrating)
         {
             this._username = username;
             this._password = password;
             this._OpenFolders = OpenFolders;
             this._OpenPersonalFolder = OpenPersonalFolder;
             this._Journal = Journal;
-            this._Settings = Settings;
             this._AccountsAdministrating = AccountsAdminitrating;
         }
         public User()

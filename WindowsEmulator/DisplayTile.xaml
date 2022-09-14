@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WindowsEmulator"
              mc:Ignorable="d" 
-             d:DesignHeight="60" d:DesignWidth="45" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" Loaded="UserControl_Loaded">
+             d:DesignHeight="60" d:DesignWidth="45" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center">
     <Grid>
         <Image Source="{Binding Image}" Width="50" Height="65"/>
         <TextBlock Text="{Binding Text}"  Margin="0 0 0 -15" VerticalAlignment="Bottom" Foreground="White" FontSize="11" TextAlignment="Center" TextWrapping="Wrap"/>

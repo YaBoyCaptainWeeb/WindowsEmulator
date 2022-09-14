@@ -44,10 +44,10 @@ namespace WindowsEmulator
             {
                 data.Add(match.Value);
             }
-            user._Journal = Convert.ToBoolean(data[5]);
+            user._Journal = Convert.ToBoolean(data[5]); // Пока хз зачем, пусть висит
             DataContext = this;
         }
-        
+
         protected override void OnMouseMove(MouseEventArgs e)
         {
             base.OnMouseMove(e);
@@ -56,11 +56,5 @@ namespace WindowsEmulator
                 DragDrop.DoDragDrop(this, this, DragDropEffects.Move);
             }
         }
-
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            // btn.Click += new RoutedEventHandler(OpenJournal);
-        }
-
     }
 }

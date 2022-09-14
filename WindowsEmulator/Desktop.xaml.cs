@@ -36,7 +36,7 @@ namespace WindowsEmulator
         public static readonly DependencyProperty TextProperty = DependencyProperty.Register("Date", typeof(string), typeof(Desktop), new PropertyMetadata(null));
         User _currentUser;
         ObservableCollection<User> _users;
-        DispatcherTimer dispatcher; // Доделать дату и время на рабочем столе
+        DispatcherTimer dispatcher; // Доделать дату и время на рабочем столе(доделано)
         public Desktop(User CurrentUser, ObservableCollection<User> users)
         {
             InitializeComponent();
@@ -59,31 +59,53 @@ namespace WindowsEmulator
         }
         public void InitializeFolders()
         {
+            // Журнал безопасности
             DisplayTile journal = new DisplayTile();
             journal.Text = "Журнал безопасности";
             journal.Image = new BitmapImage(new Uri(@"Assets/Journal.png", UriKind.Relative));
             journal.MouseDoubleClick += new MouseButtonEventHandler(OpenJournal);
             FolderArea.Children.Add(journal);
+            // Админ панель
             DisplayTile journalAdmin = new DisplayTile();
             journalAdmin.Text = "Панель администратора";
             journalAdmin.Image = new BitmapImage(new Uri(@"Assets/AdminPanel.png", UriKind.Relative));
-            // journalAdmin.MouseDoubleClick += new MouseButtonEventHandler(OpenJournal);
+            journalAdmin.MouseDoubleClick += new MouseButtonEventHandler(OpenAdminPanel);
             FolderArea.Children.Add(journalAdmin);
             Canvas.SetLeft(journalAdmin, 125);      
         }
 
-
+        private void OpenAdminPanel(object sender, RoutedEventArgs e)
+        {
+            if (_currentUser._AccountsAdministrating == true)
+            {
+                var task = new AdminPanel(_currentUser, _users);
+                if (task.IsActive == false)
+                {
+                    task.Show();
+                    File.AppendAllText(@"Journal.txt", DateTime.Now.ToString(@"g") + " Вход в панель администратора: " + _currentUser._username + "\n");
+                }
+            } else
+            {
+                MessageBox.Show("У вас нет доступа к панели Администратора.", "Ошибка", MessageBoxButton.OK);
+                File.AppendAllText(@"Journal.txt", DateTime.Now.ToString(@"g") + " Попытка доступа к панели администратора: " + _currentUser._username + "\n");
+            }
+        }
 
         private void OpenJournal(object sender, RoutedEventArgs e)
         {
                 if (_currentUser._Journal == true) // Проверка на наличие доступа у пользователя, должно быть true
                 {
-                    var task = new Journal();
+                   var task = new Journal();
+                if (task.IsActive == false)
+                {
                     task.Show();
+                    File.AppendAllText(@"Journal.txt", DateTime.Now.ToString(@"g") + " Вход в журнал безопасности: " + _currentUser._username + "\n");
+                }
                 }
                 else
                 {
                     MessageBox.Show("У вас нет доступа к журналу.", "Ошибка", MessageBoxButton.OK);
+                    File.AppendAllText(@"Journal.txt", DateTime.Now.ToString(@"g") + " Попытка доступа к журналу безопасности: " + _currentUser._username + "\n");  
                 }
         }
 

@@ -26,9 +26,6 @@
             <Button Grid.Column="1" ToolTip="Сменить пользователя" Click="ChangeUser" Background="Transparent" BorderBrush="Transparent" >
                 <Image Source="Assets/ChangeUser.png"/>
             </Button>
-            <Button Grid.Column="2" ToolTip="Панель администратора" Background="Transparent" BorderBrush="Transparent" >
-                <Image Source="Assets/AdminPanel.png"/>
-            </Button>
             <TextBlock Grid.Column="3" x:Name="CurrentUserTitle" Foreground="White" FontSize="18"/>
             <TextBlock Grid.Column="3" Foreground="White" TextAlignment="Center" x:Name="SysTime" FontSize="14" HorizontalAlignment="Right" VerticalAlignment="Center"/>
         </Grid>
