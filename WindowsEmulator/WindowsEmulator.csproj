@@ -128,7 +128,9 @@
     <Resource Include="Assets\OSLogoEnter.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="UserList.txt" />
+    <Resource Include="UserList.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Background1.jpg" />
@@ -137,7 +139,9 @@
     <Resource Include="Assets\OSLogoExit.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Journal.txt" />
+    <Resource Include="Journal.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Desktop.jpg" />
@@ -162,13 +166,17 @@
     <Resource Include="JournalIcon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="CurrentUser.txt" />
+    <Resource Include="CurrentUser.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Folder.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Folders.txt" />
+    <Resource Include="Folders.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

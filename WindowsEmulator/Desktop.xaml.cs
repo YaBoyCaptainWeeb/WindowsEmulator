@@ -28,15 +28,9 @@ namespace WindowsEmulator
     /// </summary>
     public partial class Desktop : Window
     {
-        public string Text
-        {
-            get { return (string)GetValue(TextProperty); }
-            set { SetValue(TextProperty, value); }
-        }
-        public static readonly DependencyProperty TextProperty = DependencyProperty.Register("Date", typeof(string), typeof(Desktop), new PropertyMetadata(null));
         User _currentUser;
-        ObservableCollection<User> _users;
-        DispatcherTimer dispatcher; // Доделать дату и время на рабочем столе(доделано)
+        public ObservableCollection<User> _users;
+        DispatcherTimer dispatcher;
         public Desktop(User CurrentUser, ObservableCollection<User> users)
         {
             InitializeComponent();

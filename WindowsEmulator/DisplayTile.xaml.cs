@@ -44,7 +44,6 @@ namespace WindowsEmulator
             {
                 data.Add(match.Value);
             }
-            user._Journal = Convert.ToBoolean(data[5]); // Пока хз зачем, пусть висит
             DataContext = this;
         }
 

@@ -6,8 +6,10 @@
         xmlns:local="clr-namespace:WindowsEmulator"
         mc:Ignorable="d"
         Title="Панель администратора" Height="300" Width="715"
-        Icon="Assets/AdminPanel.png" ResizeMode="CanResize" WindowStartupLocation="CenterOwner">
-    <StackPanel >
+        Icon="Assets/AdminPanel.png" ResizeMode="CanResize" WindowStartupLocation="CenterOwner" 
+        Closing="Window_Closing">
+    <StackPanel>
+        <Button x:Name="SaveBtn" Content="Сохранить изменения" Width="150" HorizontalAlignment="Left" Click="SaveChanges"/>
         <DataGrid x:Name="AccessGrid" ItemsSource="{Binding DataGridItems, UpdateSourceTrigger=PropertyChanged}" 
                   AutoGenerateColumns="False" CanUserAddRows="True" CanUserDeleteRows="True"
                   HorizontalScrollBarVisibility="Disabled" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
