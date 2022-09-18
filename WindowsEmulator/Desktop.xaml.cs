@@ -29,7 +29,7 @@ namespace WindowsEmulator
     public partial class Desktop : Window
     {
         User _currentUser;
-        public ObservableCollection<User> _users;
+        public ObservableCollection<User> _users { get; set; }
         DispatcherTimer dispatcher;
         public Desktop(User CurrentUser, ObservableCollection<User> users)
         {
@@ -65,14 +65,25 @@ namespace WindowsEmulator
             journalAdmin.Image = new BitmapImage(new Uri(@"Assets/AdminPanel.png", UriKind.Relative));
             journalAdmin.MouseDoubleClick += new MouseButtonEventHandler(OpenAdminPanel);
             FolderArea.Children.Add(journalAdmin);
-            Canvas.SetLeft(journalAdmin, 125);      
+            Canvas.SetLeft(journalAdmin, 125);
+            // Папки пользователей
+            DisplayTile Folder1 = new DisplayTile();
+            Folder1.Text = "Панель администратора";
+            Folder1.Image = new BitmapImage(new Uri(@"Assets/Folder.png", UriKind.Relative));
+            Folder1.MouseDoubleClick += new MouseButtonEventHandler(OpenFolder);
+            FolderArea.Children.Add(Folder1);
+            Canvas.SetLeft(Folder1, 250);
+        }
+        private void OpenFolder(object sender, RoutedEventArgs e)
+        {
+
         }
 
         private void OpenAdminPanel(object sender, RoutedEventArgs e)
         {
             if (_currentUser._AccountsAdministrating == true)
             {
-                var task = new AdminPanel(_currentUser, _users);
+                var task = new AdminPanel(_currentUser);
                 if (task.IsActive == false)
                 {
                     task.Show();

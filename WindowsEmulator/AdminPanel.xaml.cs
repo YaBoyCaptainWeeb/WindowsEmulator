@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace WindowsEmulator
 {
@@ -24,17 +25,30 @@ namespace WindowsEmulator
         public User currentuser;
         public ObservableCollection<User> users = new ObservableCollection<User>();
         ViewModel viewModel;
-        bool flag = true;
+        Regex rgx = new Regex(@"\b\S+\b");
         class ViewModel
         {
             public IEnumerable<User> DataGridItems { get; set; }
         }
-        public AdminPanel(User _currentUser, ObservableCollection<User> Users)
+        public AdminPanel(User _currentUser)
         {
             InitializeComponent();
             currentuser = _currentUser;
             viewModel = new ViewModel();
-            users = Users;
+            string[] lines = File.ReadAllLines(@"UserList.txt");
+            string[] UserData = new string[6];
+            foreach (string line in lines)
+            {
+                int i = 0;
+                foreach (Match match in rgx.Matches(line))
+                {
+                    UserData[i] = match.Value;
+                    i++;
+                }
+                users.Add(new User(UserData[0], UserData[1],
+                    Convert.ToBoolean(UserData[2]), Convert.ToBoolean(UserData[3]),
+                    Convert.ToBoolean(UserData[4]), Convert.ToBoolean(UserData[5]))); // Создание объектов класса User на основе записей в списке
+            }
             Load(users);
         }
         private void Load(ObservableCollection<User> users )
@@ -55,8 +69,6 @@ namespace WindowsEmulator
         {
             users = (ObservableCollection<User>)AccessGrid.ItemsSource;
             List<string> line = new List<string>();
-            flag = true;
-            SaveBtn.IsEnabled = false;
             File.Delete(@"UserList.txt");
             File.AppendAllText(@"UserList.txt",currentuser._username + " " + currentuser._password + " " +
                 currentuser._OpenFolders + " " + currentuser._OpenPersonalFolder + " "+ currentuser._Journal+ " " + currentuser._AccountsAdministrating + "\n");
@@ -66,13 +78,8 @@ namespace WindowsEmulator
                     " " + user._AccountsAdministrating + "\n");
             }          
             Load(users);
-            SaveBtn.IsEnabled = false;
+            File.AppendAllText(@"Journal.txt", DateTime.Now.ToString(@"g") + " Внесенны изменения в учетные записи: " + currentuser._username + "\n");
         }
 
-
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-                Load(users); 
-        }
     }
 }
