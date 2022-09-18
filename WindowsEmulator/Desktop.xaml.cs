@@ -20,6 +20,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using System.Diagnostics;
 
 namespace WindowsEmulator
 {
@@ -34,7 +35,6 @@ namespace WindowsEmulator
         public Desktop(User CurrentUser, ObservableCollection<User> users)
         {
             InitializeComponent();
-            InitializeFolders();
             this.DataContext = this;
             dispatcher = new DispatcherTimer
             {
@@ -45,6 +45,7 @@ namespace WindowsEmulator
 
             _currentUser = CurrentUser;
             _users = users;
+            InitializeFolders();
             CurrentUserTitle.Text = "Пользователь: " + _currentUser._username;
         }
         private void SystemTimer(object sender, EventArgs e)
@@ -67,16 +68,35 @@ namespace WindowsEmulator
             FolderArea.Children.Add(journalAdmin);
             Canvas.SetLeft(journalAdmin, 125);
             // Папки пользователей
-            DisplayTile Folder1 = new DisplayTile();
-            Folder1.Text = "Панель администратора";
-            Folder1.Image = new BitmapImage(new Uri(@"Assets/Folder.png", UriKind.Relative));
-            Folder1.MouseDoubleClick += new MouseButtonEventHandler(OpenFolder);
-            FolderArea.Children.Add(Folder1);
-            Canvas.SetLeft(Folder1, 250);
+            for (int i = 1; i != _users.Count; i++)
+            {
+                DisplayTile Folder = new DisplayTile();
+                Folder.Text = _users[i]._username;
+                Folder.Image = new BitmapImage(new Uri(@"Assets/Folder.png", UriKind.Relative));
+                Folder.MouseDoubleClick += new MouseButtonEventHandler(OpenFolder);
+                FolderArea.Children.Add(Folder);
+                Canvas.SetLeft(Folder, 200 + 60*i);
+            }
+
+
         }
         private void OpenFolder(object sender, RoutedEventArgs e)
         {
-
+            string open = ((DisplayTile)sender).Text;
+            ProcessStartInfo info = new ProcessStartInfo();
+            info.FileName = ".\\UserFolder\\" + open;
+            if (_currentUser._OpenFolders == true)
+            {
+                Directory.CreateDirectory("UserFolder/"+ open);
+                Process.Start(info);
+            } else if (_currentUser._OpenFolders == false && _currentUser._OpenPersonalFolder == true)
+            {
+                if (open == _currentUser._username)
+                {
+                    Directory.CreateDirectory("UserFolder/" + open);
+                    Process.Start(info);
+                }
+            }
         }
 
         private void OpenAdminPanel(object sender, RoutedEventArgs e)
