@@ -186,5 +186,8 @@
   <ItemGroup>
     <Resource Include="Assets\AddUser.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Folders.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -11,7 +11,29 @@
         <ImageBrush ImageSource="Assets/Desktop.jpg"/>
     </Window.Background>
     <DockPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-        <Canvas AllowDrop="True" Drop="FolderArea_Drop" DragOver="FolderArea_DragOver" Opacity="0.4" Background="Black" x:Name="FolderArea" MinWidth="800" MinHeight="940" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DockPanel.Dock="Top">
+        <Canvas AllowDrop="True" Drop="FolderArea_Drop" DragOver="FolderArea_DragOver" x:Name="FolderArea" Opacity="0.4" Background="Black"  MinWidth="800" MinHeight="940" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DockPanel.Dock="Top">
+            <Canvas.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Создать папку" PreviewMouseDown="CreateFolder" />
+                </ContextMenu>
+            </Canvas.ContextMenu>
+            <Grid Canvas.Top="225" Canvas.Left="400" Width="300" Visibility="Hidden" x:Name="CreationGrid">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Название папки:" Foreground="White" FontWeight="DemiBold" FontSize="16" HorizontalAlignment="Center"/>
+                <TextBox Grid.Row="0" Grid.Column="1" x:Name="FolderName" Foreground="White" Height="20" BorderThickness="2" Background="Transparent" />
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Разрешить доступ к папке всем?" TextWrapping="WrapWithOverflow" Foreground="White" FontWeight="DemiBold"  FontSize="16" HorizontalAlignment="Center"/>
+                <CheckBox Grid.Row="1" Grid.Column="1" x:Name="Personal" HorizontalAlignment="Center" Foreground="Black" Height="20" BorderThickness="2" Background="Transparent"/>
+                <Button Grid.Row="3" Grid.ColumnSpan="2" Click="CreateFolder" x:Name="btn" HorizontalAlignment="Center" Content="Создать папку" Margin="0 7 0 0" Width="120" Height="20"/>
+            </Grid>
         </Canvas>
         <Grid Height="40" Background="#0a0c1a" DockPanel.Dock="Bottom" VerticalAlignment="Bottom">
             <Grid.ColumnDefinitions>
