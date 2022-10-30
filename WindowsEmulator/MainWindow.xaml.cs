@@ -26,52 +26,51 @@ namespace WindowsEmulator
     /// </summary>
     public partial class MainWindow : Window
     {
-        string[] UserList;
-        string[] UserData = new string[6];
-        ObservableCollection<User> Users;
         Regex rgx = new Regex(@"\b\S+\b");
-        
+        ObservableCollection<User> Users = new ObservableCollection<User>();
+
         public MainWindow()
         {
             InitializeComponent();
+            File.AppendAllText(@"Journal.txt", DateTime.Now.ToString(@"g") + " Выполнен запуск системы" + "\n");
+            LoadList();
+        }
+        private void LoadList()
+        {
             Users = new ObservableCollection<User>();
+            string[] UserData = new string[6];
             try
             {
-                UserList = File.ReadAllLines(@"UserList.txt");
-                File.AppendAllText(@"Journal.txt",DateTime.Now.ToString(@"g") + " Выполнен запуск системы" + "\n");
+                string[] UserList = File.ReadAllLines(@"UserList.txt");
+                if (UserList.Length != 0 && UserList[0][0] != ' ')
+                {
+                    foreach (string user in UserList)
+                    {
+                        int i = 0;
+                        foreach (Match match in rgx.Matches(user))
+                        {
+                            UserData[i] = match.Value;
+                            i++;
+                        }
+                        Users.Add(new User(UserData[0], UserData[1],
+                            Convert.ToBoolean(UserData[2]), Convert.ToBoolean(UserData[3]),
+                            Convert.ToBoolean(UserData[4]), Convert.ToBoolean(UserData[5]))); // Создание объектов класса User на основе записей в списке
+                    }
+                    List<string> UserNames = new List<string>();
+                    foreach (User user in Users)
+                    {
+                        UserNames.Add(user._username); // Добавление имен в выпадающий список в окне авторизации
+                    }
+                    UsersList.ItemsSource = UserNames;
+                }
             }
             catch (Exception)
             {
                 MessageBox.Show("Список пользователей не обнаружен.");
                 Process.GetCurrentProcess().Kill();
             }
-            if (UserList.Length != 0 && UserList[0][0] != ' ')
-            {
-                foreach (string user in UserList)
-                {
-                    int i = 0;
-                    foreach (Match match in rgx.Matches(user))
-                    {
-                        UserData[i] = match.Value;
-                        i++;
-                    }
-                    Users.Add(new User(UserData[0], UserData[1], 
-                        Convert.ToBoolean(UserData[2]), Convert.ToBoolean(UserData[3]), 
-                        Convert.ToBoolean(UserData[4]), Convert.ToBoolean(UserData[5]))); // Создание объектов класса User на основе записей в списке
-                }
-                List<string> UserNames = new List<string>();
-                foreach(User user in Users)
-                {
-                    UserNames.Add(user._username); // Добавление имен в выпадающий список в окне авторизации
-                }
-                UsersList.ItemsSource = UserNames;
-            }
-            else
-            {
-                MessageBox.Show("Список пользователей пуст");
-                Process.GetCurrentProcess().Kill();
-            }
-        }
+            
+        } // Загрузка списка пользователей из файла UserList.txt
 
         private void LogIn(object sender, RoutedEventArgs e) // Авторизация
         {
@@ -106,6 +105,12 @@ namespace WindowsEmulator
         {
             File.AppendAllText(@"Journal.txt",DateTime.Now.ToString(@"g") + " Завершение работы системы" + "\n");
             Application.Current.Shutdown();
+        }
+
+        private void AddUser(object sender, RoutedEventArgs e) // Вызов окна регистрации
+        {
+            new AddUser().ShowDialog();
+            LoadList();
         }
     }
 }
