@@ -149,11 +149,27 @@ namespace WindowsEmulator
         string folderName = "";
         private void EditFolder(object sender, RoutedEventArgs e)
         {
-            folderName = (((sender as MenuItem).Parent as ContextMenu).PlacementTarget as DisplayTile).Text;
-            Point DropPos = (((sender as MenuItem).Parent as ContextMenu).PlacementTarget as DisplayTile).PointToScreen(new Point(0, 0));
-            EditGrid.Visibility = Visibility.Visible;
-            Canvas.SetTop(EditGrid, DropPos.Y);
-            Canvas.SetLeft(EditGrid, DropPos.X);  
+            var obj = ((sender as MenuItem).Parent as ContextMenu).PlacementTarget as DisplayTile;
+            if ((_currentUser._OpenFolders == true && obj.Tag.ToString() == "ForAll") || _currentUser._username == "Admin")
+            {
+                folderName = (((sender as MenuItem).Parent as ContextMenu).PlacementTarget as DisplayTile).Text;
+                Point DropPos = (((sender as MenuItem).Parent as ContextMenu).PlacementTarget as DisplayTile).PointToScreen(new Point(0, 0));
+                EditGrid.Visibility = Visibility.Visible;
+                Canvas.SetTop(EditGrid, DropPos.Y);
+                Canvas.SetLeft(EditGrid, DropPos.X);
+            }
+            else if (_currentUser._OpenFolders == false && _currentUser._OpenPersonalFolder == true && obj.Tag.ToString() == _currentUser._username)
+            {
+                folderName = (((sender as MenuItem).Parent as ContextMenu).PlacementTarget as DisplayTile).Text;
+                Point DropPos = (((sender as MenuItem).Parent as ContextMenu).PlacementTarget as DisplayTile).PointToScreen(new Point(0, 0));
+                EditGrid.Visibility = Visibility.Visible;
+                Canvas.SetTop(EditGrid, DropPos.Y);
+                Canvas.SetLeft(EditGrid, DropPos.X);
+            }
+            else
+            {
+                MessageBox.Show("Вы не можете редактировать данную папку", "Недостаточно прав");
+            }
         }
 
         private void EditFolder1(object sender, RoutedEventArgs e)
@@ -165,8 +181,6 @@ namespace WindowsEmulator
                 {
                     if ((child as DisplayTile).Text == folderName && EditFolderName.Text != " ")
                     {
-                        if ((_currentUser._OpenFolders == true && (child as DisplayTile).Tag.ToString() == "ForAll") || _currentUser._username == "Admin")
-                        {
                             string tag = (child as DisplayTile).Tag.ToString();
                             Directory.Delete(@"UserFolder\" + (child as DisplayTile).Text);
                             string[] Folders = File.ReadAllLines(@"Folders.txt");
@@ -182,40 +196,11 @@ namespace WindowsEmulator
                             (child as DisplayTile).Text = EditFolderName.Text;
                             if (EditPersonal.IsChecked != false)
                             {
-                                (child as DisplayTile).Tag = "ForAll";
-                            } else
-                            {
-                                (child as DisplayTile).Tag = tag;
-                            }
-                            Point pos = (child as DisplayTile).PointToScreen(new Point(0, 0));
-                            Directory.CreateDirectory(@"UserFolder\" + EditFolderName.Text);
-                            File.AppendAllText(@"Folders.txt", (child as DisplayTile).Text + "|" + (child as DisplayTile).Tag + "|" + (pos.X - 45) + "|" + (pos.Y - 60) + "\n");
-                            EditGrid.Visibility = Visibility.Hidden;
-                            EditFolderName.Text = "";
-                            EditPersonal.IsChecked = false;        
-                        }
-                        else if (_currentUser._OpenFolders == false && _currentUser._OpenPersonalFolder == true && (child as DisplayTile).Tag.ToString() == _currentUser._username)
-                        {
-                            string tag = (child as DisplayTile).Tag.ToString();
-                            Directory.Delete(@"UserFolder\" + (child as DisplayTile).Text);
-                            string[] Folders = File.ReadAllLines(@"Folders.txt");
-                            File.Delete(@"Folders.txt");
-                            foreach (string folder in Folders)
-                            {
-                                string[] folderData = folder.Split('|');
-                                if ((child as DisplayTile).Text != folderData[0])
-                                {
-                                    File.AppendAllText(@"Folders.txt", folder + "\n");
-                                }
-                            }
-                            (child as DisplayTile).Text = EditFolderName.Text;
-                            if (EditPersonal.IsChecked != false)
-                            {
-                                (child as DisplayTile).Tag = "ForAll";
+                             (child as DisplayTile).Tag = "ForAll";
                             }
                             else
                             {
-                                (child as DisplayTile).Tag = tag;
+                             (child as DisplayTile).Tag = tag;
                             }
                             Point pos = (child as DisplayTile).PointToScreen(new Point(0, 0));
                             Directory.CreateDirectory(@"UserFolder\" + EditFolderName.Text);
@@ -223,12 +208,7 @@ namespace WindowsEmulator
                             EditGrid.Visibility = Visibility.Hidden;
                             EditFolderName.Text = "";
                             EditPersonal.IsChecked = false;
-                        }
-                        else
-                        {
-                            MessageBox.Show("Вы не можете редактировать данную папку", "Недостаточно прав");
-                        }
-                    }
+                    } 
                 }
             }   
         }
