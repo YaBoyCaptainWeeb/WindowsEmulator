@@ -31,7 +31,7 @@
                 <TextBlock Grid.Row="0" Grid.Column="0" Text="Название папки:" Foreground="White" FontWeight="DemiBold" FontSize="16" HorizontalAlignment="Center"/>
                 <TextBox Grid.Row="0" Grid.Column="1" x:Name="FolderName" Foreground="White" Height="20" BorderThickness="2" Background="Transparent" />
                 <TextBlock Grid.Row="1" Grid.Column="0" Text="Разрешить доступ к папке всем?" TextWrapping="WrapWithOverflow" Foreground="White" FontWeight="DemiBold"  FontSize="16" HorizontalAlignment="Center"/>
-                <CheckBox Grid.Row="1" Grid.Column="1" x:Name="Personal" HorizontalAlignment="Center" Foreground="Black" Height="20" BorderThickness="2" Background="Transparent"/>
+                <CheckBox Grid.Row="1" Grid.Column="1" x:Name="Personal" HorizontalAlignment="Center" Foreground="Red" Height="20" BorderThickness="2" Background="Transparent"/>
                 <Button Grid.Row="3" Grid.ColumnSpan="2" Click="CreateFolder" x:Name="btn" HorizontalAlignment="Center" Content="Создать папку" Margin="0 7 0 0" Width="120" Height="20"/>
             </Grid>
             <Grid Canvas.Top="225" Canvas.Left="400" Width="300" Visibility="Hidden" x:Name="EditGrid">

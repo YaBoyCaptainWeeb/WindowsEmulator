@@ -62,24 +62,26 @@ namespace WindowsEmulator
                     users1.Add(users[i]);
                 }
             }
+            if (currentuser._username != "Admin")
+            {
+                AccessGrid.Columns[5].IsReadOnly = true;
+            }
+            AccessGrid.Columns[3].IsReadOnly = true;
             viewModel.DataGridItems = users1;
             DataContext = this.viewModel;
         }
         private void SaveChanges(object sender, RoutedEventArgs e)
         {
             users = (ObservableCollection<User>)AccessGrid.ItemsSource;
-            List<string> line = new List<string>();
             File.Delete(@"UserList.txt");
-            File.AppendAllText(@"UserList.txt",currentuser._username + " " + currentuser._password + " " +
-                currentuser._OpenFolders + " " + currentuser._OpenPersonalFolder + " "+ currentuser._Journal+ " " + currentuser._AccountsAdministrating + "\n");
+            File.AppendAllText(@"UserList.txt","Admin 11 True True True True" + "\n");
             foreach (User user in users)
             {
-                File.AppendAllText(@"UserList.txt",user._username + " " + user._password + " " + user._OpenFolders + " " + user._OpenPersonalFolder + " " + user._Journal +
+                File.AppendAllText(@"UserList.txt",user._username + " " + user._password + " " + user._OpenFolders + " " + true + " " + user._Journal +
                     " " + user._AccountsAdministrating + "\n");
             }          
             Load(users);
             File.AppendAllText(@"Journal.txt", DateTime.Now.ToString(@"g") + " Внесенны изменения в учетные записи: " + currentuser._username + "\n");
         }
-
     }
 }

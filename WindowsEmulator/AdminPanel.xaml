@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WindowsEmulator"
         mc:Ignorable="d"
-        Title="Панель администратора" Height="300" Width="715"
-        Icon="Assets/AdminPanel.png" ResizeMode="CanResize" WindowStartupLocation="CenterOwner">
+        Title="Панель администратора" Height="300" Width="900"
+        Icon="Assets/AdminPanel.png" ResizeMode="CanResize" WindowStartupLocation="CenterScreen">
     <StackPanel>
         <Button x:Name="SaveBtn" Content="Сохранить изменения" Width="150" HorizontalAlignment="Left" Click="SaveChanges"/>
         <DataGrid x:Name="AccessGrid" ItemsSource="{Binding DataGridItems, UpdateSourceTrigger=PropertyChanged}" 
@@ -18,7 +18,7 @@
                 <DataGridCheckBoxColumn Header="Открытие публичных файлов" Binding="{Binding _OpenFolders}"/>
                 <DataGridCheckBoxColumn Header="Открытие личных файлов" Binding="{Binding _OpenPersonalFolder}"/>
                 <DataGridCheckBoxColumn Header="Доступ к журналу безопасности" Binding="{Binding _Journal}"/>
-                <!--<DataGridCheckBoxColumn Header="Управление учетными записями" Binding="{Binding _AccountsAdministrating}"/> -->
+                <DataGridCheckBoxColumn Header="Управление учетными записями" Binding="{Binding _AccountsAdministrating}"/>
             </DataGrid.Columns>
         </DataGrid>
     </StackPanel>

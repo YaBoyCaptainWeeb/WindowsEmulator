@@ -8,6 +8,6 @@
              d:DesignHeight="60" d:DesignWidth="45" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center">
     <Grid>
         <Image Source="{Binding Image}" Width="50" Height="65"/>
-        <TextBlock Text="{Binding Text}"  Margin="0 0 0 -15" VerticalAlignment="Bottom" Foreground="White" FontSize="11" TextAlignment="Center" TextWrapping="Wrap"/>
+        <TextBlock Text="{Binding Text}"  Margin="0 0 0 -10" VerticalAlignment="Bottom" Foreground="White" FontSize="11" TextAlignment="Center" TextWrapping="Wrap"/>
     </Grid>
 </UserControl>

@@ -2,4 +2,4 @@ Admin 11 True True True True
 User1 11 False True False False
 User2 11 True True True False
 User3 11 False True False False
-Negr 11 False True False False
+Жан<3 11 True True True True
