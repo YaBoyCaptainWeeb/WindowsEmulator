@@ -53,7 +53,8 @@ namespace WindowsEmulator
             _currentUser = CurrentUser;
             _users = users;
             
-            CurrentUserTitle.Text = "Пользователь: " + _currentUser._username;
+            CurrentUserTitle.Text = "Пользователь: " + _currentUser._username + "\tУровень доступа: " + _currentUser._level;
+
         }
         private void SystemTimer(object sender, EventArgs e)
         {
@@ -95,12 +96,12 @@ namespace WindowsEmulator
                         newFolder.ContextMenu.Items.Add(item1);
                         newFolder.Text = FolderData[0];
                         newFolder.Name = FolderData[1];
-                        newFolder.Tag = FolderData[4];
+                        newFolder.Tag = FolderData[2];
                         newFolder.Image = new BitmapImage(new Uri(@"Assets/Folder.png", UriKind.Relative));
                         newFolder.MouseDoubleClick += new MouseButtonEventHandler(OpenFolder);
                         FolderArea.Children.Add(newFolder);
-                        Canvas.SetLeft(newFolder, (Convert.ToDouble(FolderData[2])));
-                        Canvas.SetTop(newFolder, (Convert.ToDouble(FolderData[3])));
+                        Canvas.SetLeft(newFolder, (Convert.ToDouble(FolderData[3])));
+                        Canvas.SetTop(newFolder, (Convert.ToDouble(FolderData[4])));
                     }
                 }
             }
@@ -114,7 +115,7 @@ namespace WindowsEmulator
         private void DeleteFolder(object sender, RoutedEventArgs e)
         {
             var obj = ((sender as MenuItem).Parent as ContextMenu).PlacementTarget as DisplayTile;
-            if ((_currentUser._OpenFolders == true && obj.Tag.ToString() == "ForAll") || _currentUser._username == "Admin")
+            if ((_currentUser._level >= Convert.ToInt32(obj.Tag)) || _currentUser._username == "Admin")
             {
                 FolderArea.Children.Remove(obj);
                 Directory.Delete(@"UserFolder\" + obj.Text);
@@ -129,7 +130,7 @@ namespace WindowsEmulator
                     }
                 }
             }
-            else if (_currentUser._OpenFolders == false && _currentUser._OpenPersonalFolder == true && obj.Tag.ToString() == "Personal" && obj.Name == _currentUser._username)
+            else if (_currentUser._level >= Convert.ToInt32(obj.Tag))
             {
                 FolderArea.Children.Remove(obj);
                 Directory.Delete(@"UserFolder\" + obj.Text);
@@ -141,21 +142,9 @@ namespace WindowsEmulator
                     if (folderData[0] != obj.Text)
                     {
                         File.AppendAllText(@"Folders.txt", folder + "\n");
-                    }
-                }
-            }
-            else if (_currentUser._OpenFolders == false && _currentUser._OpenPersonalFolder == true && obj.Tag.ToString() == "ForAll" && obj.Name == _currentUser._username)
-            {
-                FolderArea.Children.Remove(obj);
-                Directory.Delete(@"UserFolder\" + obj.Text);
-                string[] FoldersList = File.ReadAllLines(@"Folders.txt");
-                File.Delete(@"Folders.txt");
-                foreach (string folder in FoldersList)
-                {
-                    string[] folderData = folder.Split('|');
-                    if (folderData[0] != obj.Text)
+                    } else
                     {
-                        File.AppendAllText(@"Folders.txt", folder + "\n");
+                        File.Create(@"Folders.txt");
                     }
                 }
             }
@@ -169,7 +158,7 @@ namespace WindowsEmulator
         private void EditFolder(object sender, RoutedEventArgs e)
         {
             var obj = ((sender as MenuItem).Parent as ContextMenu).PlacementTarget as DisplayTile;
-            if ((_currentUser._OpenFolders == true && obj.Tag.ToString() == "ForAll") || _currentUser._username == "Admin")
+            if ((_currentUser._level >= Convert.ToInt32(obj.Tag)) || _currentUser._username == "Admin")
             {
                 folderName = (((sender as MenuItem).Parent as ContextMenu).PlacementTarget as DisplayTile).Text;
                 Point DropPos = (((sender as MenuItem).Parent as ContextMenu).PlacementTarget as DisplayTile).PointToScreen(new Point(0, 0));
@@ -177,15 +166,7 @@ namespace WindowsEmulator
                 Canvas.SetTop(EditGrid, DropPos.Y);
                 Canvas.SetLeft(EditGrid, DropPos.X);
             }
-            else if (_currentUser._OpenFolders == false && _currentUser._OpenPersonalFolder == true && obj.Tag.ToString() == "Personal" && obj.Name == _currentUser._username)
-            {
-                folderName = (((sender as MenuItem).Parent as ContextMenu).PlacementTarget as DisplayTile).Text;
-                Point DropPos = (((sender as MenuItem).Parent as ContextMenu).PlacementTarget as DisplayTile).PointToScreen(new Point(0, 0));
-                EditGrid.Visibility = Visibility.Visible;
-                Canvas.SetTop(EditGrid, DropPos.Y);
-                Canvas.SetLeft(EditGrid, DropPos.X);
-            }
-            else if (_currentUser._OpenFolders == false && _currentUser._OpenPersonalFolder == true && obj.Tag.ToString() == "ForAll" && obj.Name == _currentUser._username)
+            else if (_currentUser._level >= Convert.ToInt32(obj.Tag))
             {
                 folderName = (((sender as MenuItem).Parent as ContextMenu).PlacementTarget as DisplayTile).Text;
                 Point DropPos = (((sender as MenuItem).Parent as ContextMenu).PlacementTarget as DisplayTile).PointToScreen(new Point(0, 0));
@@ -201,13 +182,15 @@ namespace WindowsEmulator
 
         private void EditFolder1(object sender, RoutedEventArgs e)
         {
-            foreach (var child in FolderArea.Children)
+            if (EditLevel.SelectedIndex + 1 <= _currentUser._level)
             {
-                string type = child.GetType().ToString();
-                if (type == "WindowsEmulator.DisplayTile")
+                foreach (var child in FolderArea.Children)
                 {
-                    if ((child as DisplayTile).Text == folderName && EditFolderName.Text != " ")
+                    string type = child.GetType().ToString();
+                    if (type == "WindowsEmulator.DisplayTile")
                     {
+                        if ((child as DisplayTile).Text == folderName && EditFolderName.Text != " ")
+                        {
                             string tag = (child as DisplayTile).Tag.ToString();
                             Directory.Delete(@"UserFolder\" + (child as DisplayTile).Text);
                             string[] Folders = File.ReadAllLines(@"Folders.txt");
@@ -220,24 +203,21 @@ namespace WindowsEmulator
                                     File.AppendAllText(@"Folders.txt", folder + "\n");
                                 }
                             }
-                            (child as DisplayTile).Text = EditFolderName.Text;
-                            if (EditPersonal.IsChecked != false)
-                            {
-                             (child as DisplayTile).Tag = "ForAll";
-                            }
-                            else
-                            {
-                             (child as DisplayTile).Tag = "Personal";
-                            }
+                                (child as DisplayTile).Text = EditFolderName.Text;
+                            (child as DisplayTile).Tag = EditLevel.SelectedIndex + 1;
                             Point pos = (child as DisplayTile).PointToScreen(new Point(0, 0));
                             Directory.CreateDirectory(@"UserFolder\" + EditFolderName.Text);
-                            File.AppendAllText(@"Folders.txt", (child as DisplayTile).Text + "|" + (child as DisplayTile).Name + "|" + (pos.X - 45) + "|" + (pos.Y - 60) + "|" + (child as DisplayTile).Tag.ToString() + "\n");
+                            File.AppendAllText(@"Folders.txt", (child as DisplayTile).Text + "|" + (child as DisplayTile).Name + "|" + (child as DisplayTile).Tag.ToString() + "|" + (pos.X - 45) + "|" + (pos.Y - 60) + "\n");
                             EditGrid.Visibility = Visibility.Hidden;
                             EditFolderName.Text = "";
-                            EditPersonal.IsChecked = false;
-                    } 
+                            EditLevel.SelectedIndex = 0;
+                        }
+                    }
                 }
-            }   
+            } else
+            {
+                MessageBox.Show("Вы указали доступ к папке выше, чем ваш", "Ошибка");
+            }
         }
 
         private void CreateFolder(object sender, MouseButtonEventArgs e)
@@ -259,63 +239,68 @@ namespace WindowsEmulator
      
         private void CreateFolder(object sender, RoutedEventArgs e)
         {
-            DisplayTile newFolder = new DisplayTile();
-
-            newFolder.ContextMenu = new ContextMenu();
-            MenuItem item = new MenuItem();
-            item.Header = "Удалить";
-            item.Click += new RoutedEventHandler(DeleteFolder);
-            newFolder.ContextMenu.Items.Add(item);
-
-            MenuItem item1 = new MenuItem();
-            item1.Header = "Редактировать";
-            item1.Click += new RoutedEventHandler(EditFolder);
-            newFolder.ContextMenu.Items.Add(item1);
-
-            Point DropPos = btn.PointToScreen(new Point(0, 0));
-            if (FolderName.Text.Length != 0 && FolderName.Text != " ")
+            if (Level.SelectedIndex + 1 <= _currentUser._level)
             {
-                newFolder.Image = new BitmapImage(new Uri(@"Assets/Folder.png", UriKind.Relative));
-                newFolder.MouseDoubleClick += new MouseButtonEventHandler(OpenFolder);
-                newFolder.Text = FolderName.Text;
-                if (Personal.IsChecked == true)
+                DisplayTile newFolder = new DisplayTile();
+
+                newFolder.ContextMenu = new ContextMenu();
+                MenuItem item = new MenuItem();
+                item.Header = "Удалить";
+                item.Click += new RoutedEventHandler(DeleteFolder);
+                newFolder.ContextMenu.Items.Add(item);
+
+                MenuItem item1 = new MenuItem();
+                item1.Header = "Редактировать";
+                item1.Click += new RoutedEventHandler(EditFolder);
+                newFolder.ContextMenu.Items.Add(item1);
+
+                if (!File.Exists(@"Folders.txt"))
                 {
-                    newFolder.Tag = "ForAll";
+                    File.Create(@"Folders.txt");
+                }
+
+                Point DropPos = btn.PointToScreen(new Point(0, 0));
+                if (FolderName.Text.Length != 0 && FolderName.Text != " ")
+                {
+                    newFolder.Image = new BitmapImage(new Uri(@"Assets/Folder.png", UriKind.Relative));
+                    newFolder.MouseDoubleClick += new MouseButtonEventHandler(OpenFolder);
+                    newFolder.Text = FolderName.Text;
+                    newFolder.Name = _currentUser._username;
+                    newFolder.Tag = Level.SelectedIndex + 1;
+                    FolderArea.Children.Add(newFolder);
+                    Canvas.SetTop(newFolder, DropPos.Y - 60);
+                    Canvas.SetLeft(newFolder, DropPos.X - 45);
+                    if (!Directory.Exists(@"UserFolder\" + FolderName.Text))
+                    {
+                        Directory.CreateDirectory(@"UserFolder\" + FolderName.Text);
+                        File.AppendAllText(@"Folders.txt", FolderName.Text + "|" + newFolder.Name + "|" + newFolder.Tag.ToString() + "|"
+                            + (DropPos.X - 45).ToString() + "|" + (DropPos.Y - 60).ToString() + "\n");
+                        CreationGrid.Visibility = Visibility.Hidden;
+                        FolderName.Text = "";
+                        Level.SelectedIndex = 0;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Папка с таким именем уже существует");
+                        FolderArea.Children.Remove(newFolder);
+                        CreationGrid.Visibility = Visibility.Hidden;
+                        FolderName.Text = "";
+                        Level.SelectedIndex = 0;
+                        return;
+                    }
                 }
                 else
                 {
-                    newFolder.Tag = "Personal";
-                }
-                newFolder.Name = _currentUser._username;
-                FolderArea.Children.Add(newFolder);
-                Canvas.SetTop(newFolder, DropPos.Y - 60);
-                Canvas.SetLeft(newFolder, DropPos.X - 45);
-                if (!Directory.Exists(@"UserFolder\" + FolderName.Text))
-                {
-                    Directory.CreateDirectory(@"UserFolder\" + FolderName.Text);
-                    File.AppendAllText(@"Folders.txt", FolderName.Text + "|" + newFolder.Name + "|" 
-                        + (DropPos.X - 45).ToString() + "|" + (DropPos.Y - 60).ToString() + "|" + newFolder.Tag.ToString() + "\n");
-                    CreationGrid.Visibility = Visibility.Hidden;
-                    FolderName.Text = "";
-                    Personal.IsChecked = false;
-                } else
-                {
-                    MessageBox.Show("Папка с таким именем уже существует");
+                    MessageBoxResult res = MessageBox.Show("Дайте папке имя, либо отмените создание\n", "Ошибка");
                     FolderArea.Children.Remove(newFolder);
                     CreationGrid.Visibility = Visibility.Hidden;
                     FolderName.Text = "";
-                    Personal.IsChecked = false;
+                    Level.SelectedIndex = 0;
                     return;
-                }              
-            }
-            else
+                }
+            } else
             {
-                MessageBoxResult res = MessageBox.Show("Дайте папке имя, либо отмените создание\n", "Ошибка");
-                FolderArea.Children.Remove(newFolder);
-                CreationGrid.Visibility = Visibility.Hidden;
-                FolderName.Text = "";
-                Personal.IsChecked = false;
-                return;
+                MessageBox.Show("Вы указали доступ к папке выше, чем ваш", "Ошибка");
             }
         }
 
@@ -326,28 +311,24 @@ namespace WindowsEmulator
             string name = ((DisplayTile)sender).Name;
             ProcessStartInfo info = new ProcessStartInfo();
             info.FileName = ".\\UserFolder\\" + open;
-            if ((_currentUser._OpenFolders == true && tag == "ForAll") || _currentUser._username == "Admin")
+            if ((_currentUser._level >= Convert.ToInt32(tag)) || _currentUser._username == "Admin")
             {
                 Process.Start(info);
             }
-            else if (_currentUser._OpenFolders == false && _currentUser._OpenPersonalFolder == true && tag == "Personal" && name == _currentUser._username)
+            else if (_currentUser._level >= Convert.ToInt32(tag))
             {
                 Process.Start(info);
             } 
-            else if (_currentUser._OpenFolders == false && _currentUser._OpenPersonalFolder == true && tag == "ForAll" && name == _currentUser._username)
-            {
-                Process.Start(info);
-            }
         }
 
         private void OpenAdminPanel(object sender, RoutedEventArgs e)
         {
-            if (_currentUser._AccountsAdministrating == true)
+            if (_currentUser._level >= 2)
             {
                 var task = new AdminPanel(_currentUser);
                 if (task.IsActive == false)
                 {
-                    task.Show();
+                    task.ShowDialog();
                     File.AppendAllText(@"Journal.txt", DateTime.Now.ToString(@"g") + " Вход в панель администратора: " + _currentUser._username + "\n");
                 }
             }
@@ -360,7 +341,7 @@ namespace WindowsEmulator
 
         private void OpenJournal(object sender, RoutedEventArgs e)
         {
-            if (_currentUser._Journal == true) // Проверка на наличие доступа у пользователя, должно быть true
+            if (_currentUser._level >= 2) 
             {
                 var task = new Journal();
                 if (task.IsActive == false)
@@ -396,7 +377,6 @@ namespace WindowsEmulator
             string[] FolderList = File.ReadAllLines(@"Folders.txt");
             if (FolderList.Length != 0 && FolderList[0][0] != ' ' && obj.Text != "Журнал безопасности" && obj.Text != "Панель администратора")
                 {
-               // string[] FolderData = new string[4];
                 File.Delete(@"Folders.txt");
                 foreach (string folder in FolderList)
                     {
@@ -406,7 +386,7 @@ namespace WindowsEmulator
                         File.AppendAllText(@"Folders.txt", FolderData[0] + "|" + FolderData[1] + "|" + FolderData[2] + "|" + FolderData[3] + "|" + FolderData[4] + "\n");
                     } else
                     {
-                        File.AppendAllText(@"Folders.txt", FolderData[0] + "|" + FolderData[1] + "|" + (DropPos.X - 45).ToString() + "|" + (DropPos.Y - 60).ToString() + "|" + FolderData[4] + "\n");
+                        File.AppendAllText(@"Folders.txt", FolderData[0] + "|" + FolderData[1] + "|" + FolderData[2] + "|" + (DropPos.X - 45).ToString() + "|" + (DropPos.Y - 60).ToString() + "\n");
                     }
                     }
                 }

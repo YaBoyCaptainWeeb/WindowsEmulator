@@ -33,7 +33,7 @@ namespace WindowsEmulator
         private void AddNewUser(object sender, RoutedEventArgs e)
         {
             ObservableCollection<string> UsersNames = new ObservableCollection<string>();
-            string[] UserData = new string[6];
+            string[] UserData = new string[3];
             Regex rgx = new Regex(@"\b\S+\b");
             string UserName = User.Text;
             string password = User_PassWord.Text;
@@ -61,7 +61,7 @@ namespace WindowsEmulator
                             return;
                         }
                     }
-                    File.AppendAllText(@"UserList.txt", UserName + " " + password + " " + "False True False False" + "\n");
+                    File.AppendAllText(@"UserList.txt", UserName + " " + password + " " + "1"); // Доступ по умолчанию для мандатной модели
                     File.AppendAllText(@"Journal.txt", DateTime.Now.ToString(@"g") + " Создан новый пользователь: " + UserName + "\n");
                     this.Close();
                 }

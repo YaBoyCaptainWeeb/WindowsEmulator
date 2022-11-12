@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WindowsEmulator"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="Панель администратора" Height="300" Width="900"
         Icon="Assets/AdminPanel.png" ResizeMode="CanResize" WindowStartupLocation="CenterScreen">
@@ -15,10 +16,7 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Пользователь" Binding="{Binding _username}" />
                 <DataGridTextColumn Header="Пароль" Binding="{Binding _password}"/>
-                <DataGridCheckBoxColumn Header="Открытие публичных файлов" Binding="{Binding _OpenFolders}"/>
-                <DataGridCheckBoxColumn Header="Открытие личных файлов" Binding="{Binding _OpenPersonalFolder}"/>
-                <DataGridCheckBoxColumn Header="Доступ к журналу безопасности" Binding="{Binding _Journal}"/>
-                <DataGridCheckBoxColumn Header="Управление учетными записями" Binding="{Binding _AccountsAdministrating}"/>
+                <DataGridTextColumn Header="Уровень доступа" Binding="{Binding _level}"/>
             </DataGrid.Columns>
         </DataGrid>
     </StackPanel>

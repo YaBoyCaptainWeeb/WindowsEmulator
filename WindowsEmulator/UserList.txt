@@ -1,6 +1,3 @@
-Admin 11 True True True True
-User1 11 False True False False
-User2 11 True True True False
-User3 11 False True False False
-Жан♥ 11 True True True True
-Гость 11 False True False False
+Admin 11 3
+Жаннур 11 2
+Guest 123 2

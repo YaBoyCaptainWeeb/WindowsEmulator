@@ -36,7 +36,7 @@ namespace WindowsEmulator
             currentuser = _currentUser;
             viewModel = new ViewModel();
             string[] lines = File.ReadAllLines(@"UserList.txt");
-            string[] UserData = new string[6];
+            string[] UserData = new string[3];
             foreach (string line in lines)
             {
                 int i = 0;
@@ -45,9 +45,7 @@ namespace WindowsEmulator
                     UserData[i] = match.Value;
                     i++;
                 }
-                users.Add(new User(UserData[0], UserData[1],
-                    Convert.ToBoolean(UserData[2]), Convert.ToBoolean(UserData[3]),
-                    Convert.ToBoolean(UserData[4]), Convert.ToBoolean(UserData[5]))); // Создание объектов класса User на основе записей в списке
+                users.Add(new User(UserData[0], UserData[1], Convert.ToInt32(UserData[2]))); // Создание объектов класса User на основе записей в списке
             }
             Load(users);
         }
@@ -62,11 +60,6 @@ namespace WindowsEmulator
                     users1.Add(users[i]);
                 }
             }
-            if (currentuser._username != "Admin")
-            {
-                AccessGrid.Columns[5].IsReadOnly = true;
-            }
-            AccessGrid.Columns[3].IsReadOnly = true;
             viewModel.DataGridItems = users1;
             DataContext = this.viewModel;
         }
@@ -74,11 +67,10 @@ namespace WindowsEmulator
         {
             users = (ObservableCollection<User>)AccessGrid.ItemsSource;
             File.Delete(@"UserList.txt");
-            File.AppendAllText(@"UserList.txt","Admin 11 True True True True" + "\n");
+            File.AppendAllText(@"UserList.txt","Admin 11 3" + "\n");
             foreach (User user in users)
             {
-                File.AppendAllText(@"UserList.txt",user._username + " " + user._password + " " + user._OpenFolders + " " + true + " " + user._Journal +
-                    " " + user._AccountsAdministrating + "\n");
+                File.AppendAllText(@"UserList.txt",user._username + " " + user._password + " " + user._level + "\n");
             }          
             Load(users);
             File.AppendAllText(@"Journal.txt", DateTime.Now.ToString(@"g") + " Внесенны изменения в учетные записи: " + currentuser._username + "\n");

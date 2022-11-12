@@ -38,7 +38,7 @@ namespace WindowsEmulator
         private void LoadList()
         {
             Users = new ObservableCollection<User>();
-            string[] UserData = new string[6];
+            string[] UserData = new string[3];
             try
             {
                 string[] UserList = File.ReadAllLines(@"UserList.txt");
@@ -52,9 +52,8 @@ namespace WindowsEmulator
                             UserData[i] = match.Value;
                             i++;
                         }
-                        Users.Add(new User(UserData[0], UserData[1],
-                            Convert.ToBoolean(UserData[2]), Convert.ToBoolean(UserData[3]),
-                            Convert.ToBoolean(UserData[4]), Convert.ToBoolean(UserData[5]))); // Создание объектов класса User на основе записей в списке
+                        Users.Add(new User(UserData[0], UserData[1]
+                          , Convert.ToInt32(UserData[2]))); // Создание объектов класса User на основе записей в списке
                     }
                     List<string> UserNames = new List<string>();
                     foreach (User user in Users)
@@ -83,8 +82,7 @@ namespace WindowsEmulator
                     {
                         File.AppendAllText(@"Journal.txt", DateTime.Now.ToString(@"g") + " Вход в систему: " + Users[i]._username + "\n");
                         File.WriteAllText(@"CurrentUser.txt", Users[i]._username + " " + Users[i]._password + " "
-                            + Users[i]._OpenFolders + " " + Users[i]._OpenPersonalFolder + " "
-                            + Users[i]._Journal + " " + Users[i]._AccountsAdministrating);
+                            + Users[i]._level);
                         new Desktop(Users[i], Users).Show();
                         this.Close();
                         return;
