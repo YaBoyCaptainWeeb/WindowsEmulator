@@ -1,0 +1,17 @@
+﻿<Window x:Class="WindowsEmulator.DiscretionPanel"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WindowsEmulator"
+        mc:Ignorable="d"
+        Title="Дискреционная панель" Height="300" Width="900"
+        Icon="Assets/AdminPanel.png" ResizeMode="CanResize" WindowStartupLocation="CenterScreen">
+    <StackPanel>
+        <Button x:Name="SaveBtn" Content="Сохранить изменения" Width="150" HorizontalAlignment="Left" Click="SaveChanges"/>
+        <DataGrid x:Name="DiscretionGrid" ItemsSource="{Binding DataGridItems, UpdateSourceTrigger=PropertyChanged}" 
+                  AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False"
+                  HorizontalScrollBarVisibility="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        </DataGrid>
+    </StackPanel>
+</Window>

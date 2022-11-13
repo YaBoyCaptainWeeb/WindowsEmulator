@@ -70,7 +70,18 @@ namespace WindowsEmulator
             File.AppendAllText(@"UserList.txt","Admin 11 3" + "\n");
             foreach (User user in users)
             {
-                File.AppendAllText(@"UserList.txt",user._username + " " + user._password + " " + user._level + "\n");
+                if (user._level > 2)
+                {
+                    user._level = 2;
+                    File.AppendAllText(@"UserList.txt",user._username + " " + user._password + " " + user._level + "\n");
+                } else if (user._level < 1)
+                {
+                    user._level = 1;
+                    File.AppendAllText(@"UserList.txt", user._username + " " + user._password + " " + user._level + "\n");
+                } else
+                {
+                    File.AppendAllText(@"UserList.txt", user._username + " " + user._password + " " + user._level + "\n");
+                }
             }          
             Load(users);
             File.AppendAllText(@"Journal.txt", DateTime.Now.ToString(@"g") + " Внесенны изменения в учетные записи: " + currentuser._username + "\n");

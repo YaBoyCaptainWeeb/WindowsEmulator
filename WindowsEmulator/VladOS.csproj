@@ -80,6 +80,9 @@
     <Compile Include="Desktop.xaml.cs">
       <DependentUpon>Desktop.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DiscretionPanel.xaml.cs">
+      <DependentUpon>DiscretionPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DisplayTile.xaml.cs">
       <DependentUpon>DisplayTile.xaml</DependentUpon>
     </Compile>
@@ -96,6 +99,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Desktop.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DiscretionPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
